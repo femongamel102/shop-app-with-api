@@ -2,8 +2,6 @@ class CategoriesModel {
   bool? status;
   CategoriesDataModel? data;
 
-  CategoriesModel({this.status, this.data});
-
   CategoriesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     data = json['data'] != null
@@ -23,18 +21,6 @@ class CategoriesDataModel {
   int? perPage;
   int? to;
   int? total;
-
-  CategoriesDataModel(
-      {this.currentPage,
-      this.data,
-      this.firstPageUrl,
-      this.from,
-      this.lastPage,
-      this.lastPageUrl,
-      this.path,
-      this.perPage,
-      this.to,
-      this.total});
 
   CategoriesDataModel.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
@@ -59,8 +45,6 @@ class DataModel {
   int? id;
   String? name;
   String? image;
-
-  DataModel({this.id, this.name, this.image});
 
   DataModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
