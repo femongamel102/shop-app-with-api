@@ -1,12 +1,12 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app_with_api/layout/shop_app/shop_layout.dart';
 import 'package:shop_app_with_api/modules/login/cubit/cubit.dart';
 import 'package:shop_app_with_api/modules/login/cubit/states.dart';
 import 'package:shop_app_with_api/modules/register/shop_register_screen.dart';
 import 'package:shop_app_with_api/shared/components/components.dart';
+import 'package:shop_app_with_api/shared/components/constants.dart';
 import 'package:shop_app_with_api/shared/network/local/chache_helper.dart';
 
 class ShopLoginScreen extends StatelessWidget {
@@ -29,7 +29,8 @@ class ShopLoginScreen extends StatelessWidget {
               CacheHelper.saveData(
                       key: 'token', value: state.loginModel.data!.token)
                   .then((value) {
-                navigateAndFinish(context,const ShopLayout());
+                token =  state.loginModel.data!.token;
+                navigateAndFinish(context, const ShopLayout());
               });
               // showToast(
               //     msg: state.loginModel.message!,
