@@ -12,11 +12,11 @@ import 'package:shop_app_with_api/shared/network/local/chache_helper.dart';
 class ShopLoginScreen extends StatelessWidget {
   ShopLoginScreen({Key? key}) : super(key: key);
   var formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final emailController = TextEditingController();
-    final passwordController = TextEditingController();
 
     return BlocProvider(
       create: (context) => ShopLoginCubit(),
@@ -134,11 +134,11 @@ class ShopLoginScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('Don\'t have an account?'),
+                            const Text('Don\'t have an account?'),
                             defaultTextButton(
                                 function: () {
                                   navigateTo(
-                                      context, const ShopRegisterScreen());
+                                      context, ShopRegisterScreen());
                                 },
                                 text: 'register'),
                           ],
