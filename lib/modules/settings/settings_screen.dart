@@ -8,7 +8,7 @@ import 'package:shop_app_with_api/shared/components/constants.dart';
 
 class SettingsScreen extends StatelessWidget {
   SettingsScreen({Key? key}) : super(key: key);
-
+  final formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
@@ -27,59 +27,80 @@ class SettingsScreen extends StatelessWidget {
           condition: ShopCubit.get(context).userModel != null,
           builder: (context) => Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                defaultTextFormField(
-                  controller: nameController,
-                  keyboardType: TextInputType.name,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'name must not be empty';
-                    }
-                    return null;
-                  },
-                  prefixIcon: Icons.person,
-                  labelText: 'Name',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                defaultTextFormField(
-                  controller: emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'email must not be empty';
-                    }
-                    return null;
-                  },
-                  prefixIcon: Icons.email,
-                  labelText: 'Email Address',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                defaultTextFormField(
-                  controller: phoneController,
-                  keyboardType: TextInputType.phone,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'phone must not be empty';
-                    }
-                    return null;
-                  },
-                  prefixIcon: Icons.phone,
-                  labelText: 'Phone',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                defaultButton(
-                    onPressed: () {
-                      signOut(context);
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  if (state is ShopLoadingUpdateUserState)
+                    const LinearProgressIndicator(),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  defaultTextFormField(
+                    controller: nameController,
+                    keyboardType: TextInputType.name,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'name must not be empty';
+                      }
+                      return null;
                     },
-                    text: 'Logout'),
-              ],
+                    prefixIcon: Icons.person,
+                    labelText: 'Name',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  defaultTextFormField(
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'email must not be empty';
+                      }
+                      return null;
+                    },
+                    prefixIcon: Icons.email,
+                    labelText: 'Email Address',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  defaultTextFormField(
+                    controller: phoneController,
+                    keyboardType: TextInputType.phone,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'phone must not be empty';
+                      }
+                      return null;
+                    },
+                    prefixIcon: Icons.phone,
+                    labelText: 'Phone',
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  defaultButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          ShopCubit.get(context).updateUserData(
+                              name: nameController.text,
+                              email: emailController.text,
+                              phone: phoneController.text);
+                        }
+                      },
+                      text: 'update'),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  defaultButton(
+                      onPressed: () {
+                        signOut(context);
+                      },
+                      text: 'Logout'),
+                ],
+              ),
             ),
           ),
           fallback: (context) => const Center(
