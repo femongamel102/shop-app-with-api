@@ -9,7 +9,6 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var formKey = GlobalKey<FormState>();
     var searchController = TextEditingController();
     return BlocProvider(
@@ -28,35 +27,45 @@ class SearchScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     defaultTextFormField(
-                        controller: searchController,
-                        keyboardType: TextInputType.text,
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return 'enter text to search';
-                          }
-                          return null;
-                        },
-                        labelText: 'Search',
-                      onSubmit: (text){
-                          SearchCubit.get(context).search(text);
+                      controller: searchController,
+                      keyboardType: TextInputType.text,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'enter text to search';
+                        }
+                        return null;
                       },
-                        prefixIcon: Icons.search,
-
+                      labelText: 'Search',
+                      onSubmit: (text) {
+                        SearchCubit.get(context).search(text);
+                      },
+                      prefixIcon: Icons.search,
                     ),
-                    SizedBox(height: 10,),
-                    if(state is SearchLoadingState)
-                    LinearProgressIndicator(),
-                    SizedBox(height: 10,),
-                    if(state is SearchSuccessState)
-                    Expanded(
-                      child: ListView.separated(
-                          itemBuilder: (context, index) => buildListProducts(
-                              SearchCubit.get(context).model.data!.data![index],context,isOldPrice: false
-                          ),
-                          separatorBuilder: (context, index) => myDivider(),
-                          itemCount:
-                          SearchCubit.get(context).model.data!.data!.length),
+                    const SizedBox(
+                      height: 10,
                     ),
+                    if (state is SearchLoadingState)
+                      const LinearProgressIndicator(),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    if (state is SearchSuccessState)
+                      Expanded(
+                        child: ListView.separated(
+                            itemBuilder: (context, index) => buildListProducts(
+                                SearchCubit.get(context)
+                                    .model
+                                    .data!
+                                    .data![index],
+                                context,
+                                isOldPrice: false),
+                            separatorBuilder: (context, index) => myDivider(),
+                            itemCount: SearchCubit.get(context)
+                                .model
+                                .data!
+                                .data!
+                                .length),
+                      ),
                   ],
                 ),
               ),
